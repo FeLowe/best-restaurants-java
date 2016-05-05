@@ -101,6 +101,40 @@ ALTER SEQUENCE restaurants_id_seq OWNED BY restaurants.id;
 
 
 --
+-- Name: reviews; Type: TABLE; Schema: public; Owner: Guest
+--
+
+CREATE TABLE reviews (
+    id integer NOT NULL,
+    description character varying,
+    restaurant_id integer
+);
+
+
+ALTER TABLE reviews OWNER TO "Guest";
+
+--
+-- Name: reviews_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
+--
+
+CREATE SEQUENCE reviews_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE reviews_id_seq OWNER TO "Guest";
+
+--
+-- Name: reviews_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
+--
+
+ALTER SEQUENCE reviews_id_seq OWNED BY reviews.id;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
@@ -115,6 +149,13 @@ ALTER TABLE ONLY restaurants ALTER COLUMN id SET DEFAULT nextval('restaurants_id
 
 
 --
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
+--
+
+ALTER TABLE ONLY reviews ALTER COLUMN id SET DEFAULT nextval('reviews_id_seq'::regclass);
+
+
+--
 -- Data for Name: cuisines; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
@@ -126,7 +167,7 @@ COPY cuisines (id, name) FROM stdin;
 -- Name: cuisines_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('cuisines_id_seq', 1, false);
+SELECT pg_catalog.setval('cuisines_id_seq', 11, true);
 
 
 --
@@ -141,7 +182,22 @@ COPY restaurants (id, name, cuisine_id) FROM stdin;
 -- Name: restaurants_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('restaurants_id_seq', 1, false);
+SELECT pg_catalog.setval('restaurants_id_seq', 19, true);
+
+
+--
+-- Data for Name: reviews; Type: TABLE DATA; Schema: public; Owner: Guest
+--
+
+COPY reviews (id, description, restaurant_id) FROM stdin;
+\.
+
+
+--
+-- Name: reviews_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
+--
+
+SELECT pg_catalog.setval('reviews_id_seq', 12, true);
 
 
 --
@@ -158,6 +214,14 @@ ALTER TABLE ONLY cuisines
 
 ALTER TABLE ONLY restaurants
     ADD CONSTRAINT restaurants_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest
+--
+
+ALTER TABLE ONLY reviews
+    ADD CONSTRAINT reviews_pkey PRIMARY KEY (id);
 
 
 --
